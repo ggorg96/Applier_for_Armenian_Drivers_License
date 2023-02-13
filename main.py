@@ -1,6 +1,9 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
+from PyQt6.QtWidgets import *
+import sys
+import threading
 
 url = 'https://roadpolice.am/'
 
@@ -27,5 +30,50 @@ def submit():
         driver.close()
         driver.quit()
 
+class MainWindow(QMainWindow):
+    thread = None
+    stop_thread = False
+
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle('Road Police')
+        self.setFixedSize(220, 50)
+
+        self.start_button = QPushButton(self)
+        self.start_button.setText('Start')
+        self.start_button.setFixedSize(95, 30)
+        self.start_button.move(10, 10)
+        self.start_button.clicked.connect(self.start_button_handler)
+
+        self.stop_button = QPushButton(self)
+        self.stop_button.setText('Stop')
+        self.stop_button.setFixedSize(95, 30)
+        self.stop_button.move(115, 10)
+        self.stop_button.clicked.connect(self.stop_button_handler)
+        self.stop_button.setDisabled(True)
+
+    def start_button_handler(self):
+        self.start_button.setDisabled(True)
+        self.stop_button.setEnabled(True)
+
+        self.stop_thread = False
+        self.thread = threading.Thread(target=self.submitting_thread)
+        self.thread.start()
+
+    def stop_button_handler(self):
+        self.start_button.setEnabled(True)
+        self.stop_button.setDisabled(True)
+
+        self.stop_thread = True
+        self.thread.join()
+
+    def submitting_thread(self):
+        while not self.stop_thread:
+            submit()
+
 if __name__ == '__main__':
-    submit()
+    app = QApplication(sys.argv)
+    w = MainWindow()
+    w.show()
+    app.exec()
