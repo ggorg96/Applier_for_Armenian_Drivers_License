@@ -33,23 +33,30 @@ def submit():
 class MainWindow(QMainWindow):
     thread = None
     stop_thread = False
+    thread_time_out = 5
 
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle('Road Police')
-        self.setFixedSize(220, 50)
+        self.setFixedSize(220, 90)
+
+        self.time_out_combo_box = QComboBox(self)
+        self.time_out_combo_box.addItems(['Resubmit in each 5 minutes', 'Resubmit in each 10 minutes', 'Resubmit in each 15 minutes'])
+        self.time_out_combo_box.setFixedSize(210, 30)
+        self.time_out_combo_box.move(5, 10)
+        self.time_out_combo_box.currentIndexChanged.connect(self.thread_time_out_change)
 
         self.start_button = QPushButton(self)
         self.start_button.setText('Start')
         self.start_button.setFixedSize(95, 30)
-        self.start_button.move(10, 10)
+        self.start_button.move(10, 50)
         self.start_button.clicked.connect(self.start_button_handler)
 
         self.stop_button = QPushButton(self)
         self.stop_button.setText('Stop')
         self.stop_button.setFixedSize(95, 30)
-        self.stop_button.move(115, 10)
+        self.stop_button.move(115, 50)
         self.stop_button.clicked.connect(self.stop_button_handler)
         self.stop_button.setDisabled(True)
 
@@ -71,6 +78,18 @@ class MainWindow(QMainWindow):
     def submitting_thread(self):
         while not self.stop_thread:
             submit()
+            for i in range(0, self.thread_time_out*60, 3):
+                time.sleep(3)
+                if self.stop_thread:
+                    break
+
+    def thread_time_out_change(self):
+        if self.time_out_combo_box.currentIndex() == 0:
+            self.thread_time_out = 5
+        elif self.time_out_combo_box.currentIndex() == 1:
+            self.thread_time_out = 10
+        elif self.time_out_combo_box.currentIndex() == 2:
+            self.thread_time_out = 15
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
