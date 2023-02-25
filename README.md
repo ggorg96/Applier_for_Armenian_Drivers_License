@@ -4,31 +4,22 @@
 
 <br>
 
-## How to get the App
+## How to Get and Use the App
 
-#### Clone the repository or download ZIP file and unzip.
-
-<br>
-
-## Usage Guide
-
-#### **Step 1:** Run "main.app" file which is located in "dist" folder:
 ![](pngs/app.png)
 
-#### **Step 2:** Choose your prefered City where you want to pass the Driver's License exam:
-![](pngs/city.png)
+* **Step 1:** Clone the repository or download ZIP file and unzip
+* **Step 2:** Run "main.app" file which is located in "dist" folder
+* **Step 3:** Choose your Prefered City where you want to pass the Driver's License exam
+* **Step 4:** Enter your Public Service Number
+* **Step 5:** Enter your Phone Number without Country Code (for example: if your Phone Number is +37412345678 then enter 12345678)
+* **Step 6:** Choose your Preferred Time Period after which the App will try to resubmit you to queueing and click Start
 
-#### **Step 3:** Enter your Public Service Number:
-![](pngs/public_service_number.png)
-
-#### **Step 4:** Enter your Phone Number without Country Code (for example: if yor Phone Number is +37412345678 then enter 12345678):
-![](pngs/phone_number.png)
-
-#### **Step 5:** Choose your preferred time period after which the App will try to resubmit you to queueing and click Start:
-![](pngs/time_out.png)
+![](pngs/app2.png)
 
 #### As a result, the App will start trying to submit you to queueing in each chosen time period.
 #### The App during work:
+
 ![](pngs/app_during_work.png)
 
 #### To stop the continuous submission process just click Stop.
